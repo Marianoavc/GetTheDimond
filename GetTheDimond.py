@@ -36,11 +36,11 @@ def juego():
     cuadrados = crear_cuadrados()
 
     # Colocar bombas en cuadrados aleatorios
-    bombas = random.sample(cuadrados, 3)
+    bombas = random.sample(cuadrados, 1)
         
     # Cargar imágenes
-    imagen_bomba = pygame.image.load("GetTheDimond/images/bomba.png")  # Ruta de la imagen de la bomba
-    imagen_diamante = pygame.image.load("GetTheDimond/images/diamante.png")  # Ruta de la imagen del diamante
+    imagen_bomba = pygame.image.load("imagesGTD/bomba.png")  # Ruta de la imagen de la bomba
+    imagen_diamante = pygame.image.load("imagesGTD/diamante.png")  # Ruta de la imagen del diamante
 
     # Redimensionar imágenes para que se ajusten al tamaño de los cuadrados
     imagen_bomba = pygame.transform.scale(imagen_bomba, (TAMANO_CUADRADO, TAMANO_CUADRADO))
