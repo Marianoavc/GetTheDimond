@@ -12,10 +12,6 @@ ALTO_VENTANA = 400
 BLANCO = (255, 255, 255)
 AZUL_CLARO = (0, 191, 255)
 
-# Cargar imágenes
-imagen_bomba = pygame.image.load("GetTheDimond/images/bomba.png")  # Ruta de la imagen de la bomba
-imagen_diamante = pygame.image.load("GetTheDimond/images/diamante.png")  # Ruta de la imagen del diamante
-
 # Calcular tamaño y separación de los cuadrados
 TAMANO_CUADRADO = 80
 ESPACIO_ENTRE_CUADRADOS = 20
@@ -34,13 +30,17 @@ def crear_cuadrados():
 def juego():
     # Crear ventana
     ventana = pygame.display.set_mode((ANCHO_VENTANA, ALTO_VENTANA))
-    pygame.display.set_caption("Juego de Clics")
+    pygame.display.set_caption("GET THE DIMOND")
 
     # Crear cuadrados
     cuadrados = crear_cuadrados()
 
     # Colocar bombas en cuadrados aleatorios
     bombas = random.sample(cuadrados, 3)
+        
+    # Cargar imágenes
+    imagen_bomba = pygame.image.load("GetTheDimond/images/bomba.png")  # Ruta de la imagen de la bomba
+    imagen_diamante = pygame.image.load("GetTheDimond/images/diamante.png")  # Ruta de la imagen del diamante
 
     # Redimensionar imágenes para que se ajusten al tamaño de los cuadrados
     imagen_bomba = pygame.transform.scale(imagen_bomba, (TAMANO_CUADRADO, TAMANO_CUADRADO))
@@ -71,7 +71,7 @@ def juego():
 
         ventana.fill(BLANCO)  # Rellenar ventana con color blanco
 
-        # Dibujar los cuadrados y mostrar las imágenes correspondientes
+        # Dibujar cuadrados y mostrar las imágenes correspondientes
         for cuadrado, imagen in zip(cuadrados, mostrar_imagenes):
             pygame.draw.rect(ventana, AZUL_CLARO, cuadrado)
             if imagen:
@@ -88,8 +88,8 @@ def juego():
             ventana.blit(texto, texto_rect)
             pygame.display.update()
 
-            # Pausar el juego durante 3 segundos
-            pygame.time.delay(3000)
+            # Pausar el juego durante 1 segundo
+            pygame.time.delay(1000)
             jugando = False
 
     # Salir del juego
