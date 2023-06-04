@@ -5,7 +5,7 @@ import random
 pygame.init()
 
 # Definir dimensiones de la ventana
-ANCHO_VENTANA = 400
+ANCHO_VENTANA = 600
 ALTO_VENTANA = 400
 
 # Definir colores
@@ -37,7 +37,7 @@ def juego():
 
     # Colocar bombas en cuadrados aleatorios
     bombas = random.sample(cuadrados, 1)
-        
+
     # Cargar imágenes
     imagen_bomba = pygame.image.load("imagesGTD/bomba.png")  # Ruta de la imagen de la bomba
     imagen_diamante = pygame.image.load("imagesGTD/diamante.png")  # Ruta de la imagen del diamante
@@ -47,11 +47,15 @@ def juego():
     imagen_diamante = pygame.transform.scale(imagen_diamante, (TAMANO_CUADRADO, TAMANO_CUADRADO))
 
     # Inicializar lista de imágenes a mostrar en cada cuadro
-    mostrar_imagenes = [None] * len(cuadrados)
+    mostrar_cuadrado = [False] * len(cuadrados)
 
     # Variables del juego
     jugando = True
     bomba_encontrada = False
+
+    # Cargar imagen de la bomba en el cuadro de la bomba
+    bomba_index = cuadrados.index(bombas[0])
+    mostrar_cuadrado[bomba_index] = imagen_bomba
 
     # Bucle principal del juego
     while jugando:
@@ -63,19 +67,19 @@ def juego():
                     if cuadrado.collidepoint(evento.pos):
                         if cuadrado in bombas:
                             # Mostrar imagen de la bomba en el cuadrado
-                            mostrar_imagenes[i] = imagen_bomba
+                            mostrar_cuadrado[i] = imagen_bomba
                             bomba_encontrada = True
                         else:
                             # Mostrar imagen del diamante en el cuadrado
-                            mostrar_imagenes[i] = imagen_diamante
+                            mostrar_cuadrado[i] = imagen_diamante
 
         ventana.fill(BLANCO)  # Rellenar ventana con color blanco
 
         # Dibujar cuadrados y mostrar las imágenes correspondientes
-        for cuadrado, imagen in zip(cuadrados, mostrar_imagenes):
+        for i, cuadrado in enumerate(cuadrados):
             pygame.draw.rect(ventana, AZUL_CLARO, cuadrado)
-            if imagen:
-                ventana.blit(imagen, cuadrado.topleft)
+            if mostrar_cuadrado[i]:
+                ventana.blit(mostrar_cuadrado[i], cuadrado.topleft)
 
         pygame.display.update()  # Actualizar ventana
 
@@ -94,7 +98,6 @@ def juego():
 
     # Salir del juego
     pygame.quit()
-
 
 # Ejecutar juego
 juego()
