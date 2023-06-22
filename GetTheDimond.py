@@ -1,5 +1,6 @@
 import pygame
 import random
+from pygame.locals import *
 
 # Inicializar Pygame
 pygame.init()
@@ -26,6 +27,29 @@ def crear_cuadrados():
             cuadrados.append(pygame.Rect(x, y, TAMANO_CUADRADO, TAMANO_CUADRADO))
     return cuadrados
 
+#variables constantes
+cartera = 100
+numBombas = 0
+montoApuesta = 0
+
+#actualizan debe estar en el loop
+enJuego = 0
+multiplicador = 1
+
+# Función para retirarse del juego
+def retirarse():
+    global enJuego
+    enJuego = 0
+    # Otras acciones relacionadas con retirarse del juego
+    # ...
+
+# Función para realizar una apuesta
+def apostar():
+    global enJuego
+    enJuego = 1
+    # Otras acciones relacionadas con realizar una apuesta
+    # ...
+
 # Función principal del juego
 def juego():
     # Crear ventana
@@ -37,7 +61,7 @@ def juego():
 
     # Colocar bombas en cuadrados aleatorios
     bombas = random.sample(cuadrados, 1)
-        
+
     # Cargar imágenes
     imagen_bomba = pygame.image.load("imagesGTD/bomba.png")  # Ruta de la imagen de la bomba
     imagen_diamante = pygame.image.load("imagesGTD/diamante.png")  # Ruta de la imagen del diamante
@@ -52,6 +76,10 @@ def juego():
     # Variables del juego
     jugando = True
     bomba_encontrada = False
+
+    # Rectángulos de los botones
+    boton_retirarse = pygame.Rect(10, 10, 100, 50)
+    boton_apostar = pygame.Rect(120, 10, 100, 50)
 
     # Bucle principal del juego
     while jugando:
@@ -68,6 +96,10 @@ def juego():
                         else:
                             # Mostrar imagen del diamante en el cuadrado
                             mostrar_imagenes[i] = imagen_diamante
+                if boton_retirarse.collidepoint(evento.pos):
+                    retirarse()  # Llamar a la función 'retirarse' al hacer clic en el botón "Retirarse"
+                elif boton_apostar.collidepoint(evento.pos):
+                    apostar()  # Llamar a la función 'apostar' al hacer clic en el botón "Apostar"
 
         ventana.fill(BLANCO)  # Rellenar ventana con color blanco
 
@@ -76,6 +108,17 @@ def juego():
             pygame.draw.rect(ventana, AZUL_CLARO, cuadrado)
             if imagen:
                 ventana.blit(imagen, cuadrado.topleft)
+
+        # Dibujar botones
+        pygame.draw.rect(ventana, (0, 255, 0), boton_retirarse)  # Botón "Retirarse" en color verde
+        pygame.draw.rect(ventana, (255, 0, 0), boton_apostar)  # Botón "Apostar" en color rojo
+
+        fuente = pygame.font.Font(None, 24)  # Fuente para el texto de los botones
+        texto_retirarse = fuente.render("Retirarse", True, (255, 255, 255))  # Texto para el botón "Retirarse"
+        texto_apostar = fuente.render("Apostar", True, (255, 255, 255))  # Texto para el botón "Apostar"
+
+        ventana.blit(texto_retirarse, (boton_retirarse.x + 10, boton_retirarse.y + 10))  # Mostrar el texto del botón "Retirarse"
+        ventana.blit(texto_apostar, (boton_apostar.x + 10, boton_apostar.y + 10))  # Mostrar el texto del botón "Apostar"
 
         pygame.display.update()  # Actualizar ventana
 
