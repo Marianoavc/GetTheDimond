@@ -10,7 +10,7 @@ ANCHO_VENTANA = 800
 ALTO_VENTANA = 600
 
 # Definir colores
-BLANCO = (255, 255, 255)
+NEGRO = (0, 0, 0)
 AZUL_CLARO = (0, 191, 255)
 
 # Calcular tamaño y separación de los cuadrados
@@ -29,7 +29,7 @@ def crear_cuadrados():
 
 #variables constantes
 cartera = 100
-numBombas = 5
+numBombas = 3
 montoApuesta = 0
 
 #actualizan debe estar en el loop
@@ -83,21 +83,22 @@ def juego():
             if evento.type == pygame.QUIT:
                 jugando = False
             elif evento.type == pygame.MOUSEBUTTONUP:
-                for i, cuadrado in enumerate(cuadrados):
-                    if cuadrado.collidepoint(evento.pos):
-                        if cuadrado in bombas:
-                            # Mostrar imagen de la bomba en el cuadrado
-                            mostrar_imagenes[i] = imagen_bomba
-                            bomba_encontrada = True
-                        else:
-                            # Mostrar imagen del diamante en el cuadrado
-                            mostrar_imagenes[i] = imagen_diamante
                 if boton_retirarse.collidepoint(evento.pos):
                     retirarse()  # Llamar a la función 'retirarse' al hacer clic en el botón "Retirarse"
                 elif boton_apostar.collidepoint(evento.pos):
                     apostar()  # Llamar a la función 'apostar' al hacer clic en el botón "Apostar"
+                else:
+                    for i, cuadrado in enumerate(cuadrados):
+                        if cuadrado.collidepoint(evento.pos):
+                            if cuadrado in bombas:
+                                # Mostrar imagen de la bomba en el cuadrado
+                                mostrar_imagenes[i] = imagen_bomba
+                                bomba_encontrada = True
+                            else:
+                                # Mostrar imagen del diamante en el cuadrado
+                                mostrar_imagenes[i] = imagen_diamante
 
-        ventana.fill(BLANCO)  # Rellenar ventana con color blanco
+        ventana.fill(NEGRO)  # Rellenar ventana con color negro
 
         # Dibujar cuadrados y mostrar las imágenes correspondientes
         for cuadrado, imagen in zip(cuadrados, mostrar_imagenes):
@@ -106,13 +107,13 @@ def juego():
                 ventana.blit(imagen, cuadrado.topleft)
 
         # Dibujar botones
-        boton_retirarse = pygame.Rect(ANCHO_VENTANA - 180, ALTO_VENTANA - 80, 150, 60)  # Botón "Retirarse"
-        boton_apostar = pygame.Rect(ANCHO_VENTANA - 360, ALTO_VENTANA - 80, 150, 60)  # Botón "Apostar"
+        boton_retirarse = pygame.Rect(ANCHO_VENTANA - 250, ALTO_VENTANA - 150, 100, 40)  # Botón "Retirarse"
+        boton_apostar = pygame.Rect(ANCHO_VENTANA - 140, ALTO_VENTANA - 150, 100, 40)  # Botón "Apostar"
 
         pygame.draw.rect(ventana, (0, 255, 0), boton_retirarse)  # Botón "Retirarse" en color verde
         pygame.draw.rect(ventana, (255, 0, 0), boton_apostar)  # Botón "Apostar" en color rojo
 
-        fuente = pygame.font.Font(None, 24)  # Fuente para el texto de los botones
+        fuente = pygame.font.Font(None, 20)  # Fuente para el texto de los botones
         texto_retirarse = fuente.render("Retirarse", True, (255, 255, 255))  # Texto para el botón "Retirarse"
         texto_apostar = fuente.render("Apostar", True, (255, 255, 255))  # Texto para el botón "Apostar"
 
