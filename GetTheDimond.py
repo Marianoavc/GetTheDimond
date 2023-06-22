@@ -6,8 +6,8 @@ from pygame.locals import *
 pygame.init()
 
 # Definir dimensiones de la ventana
-ANCHO_VENTANA = 600
-ALTO_VENTANA = 400
+ANCHO_VENTANA = 800
+ALTO_VENTANA = 600
 
 # Definir colores
 BLANCO = (255, 255, 255)
@@ -20,16 +20,16 @@ ESPACIO_ENTRE_CUADRADOS = 20
 # Función para crear lista de cuadrados
 def crear_cuadrados():
     cuadrados = []
-    for fila in range(4):
-        for columna in range(4):
-            x = columna * (TAMANO_CUADRADO + ESPACIO_ENTRE_CUADRADOS)
-            y = fila * (TAMANO_CUADRADO + ESPACIO_ENTRE_CUADRADOS)
+    for fila in range(5):
+        for columna in range(5):
+            x = columna * (TAMANO_CUADRADO + ESPACIO_ENTRE_CUADRADOS) + 20
+            y = fila * (TAMANO_CUADRADO + ESPACIO_ENTRE_CUADRADOS) + 100
             cuadrados.append(pygame.Rect(x, y, TAMANO_CUADRADO, TAMANO_CUADRADO))
     return cuadrados
 
 #variables constantes
 cartera = 100
-numBombas = 0
+numBombas = 5
 montoApuesta = 0
 
 #actualizan debe estar en el loop
@@ -60,7 +60,7 @@ def juego():
     cuadrados = crear_cuadrados()
 
     # Colocar bombas en cuadrados aleatorios
-    bombas = random.sample(cuadrados, 1)
+    bombas = random.sample(cuadrados, numBombas)
 
     # Cargar imágenes
     imagen_bomba = pygame.image.load("imagesGTD/bomba.png")  # Ruta de la imagen de la bomba
@@ -76,10 +76,6 @@ def juego():
     # Variables del juego
     jugando = True
     bomba_encontrada = False
-
-    # Rectángulos de los botones
-    boton_retirarse = pygame.Rect(10, 10, 100, 50)
-    boton_apostar = pygame.Rect(120, 10, 100, 50)
 
     # Bucle principal del juego
     while jugando:
@@ -110,6 +106,9 @@ def juego():
                 ventana.blit(imagen, cuadrado.topleft)
 
         # Dibujar botones
+        boton_retirarse = pygame.Rect(ANCHO_VENTANA - 180, ALTO_VENTANA - 80, 150, 60)  # Botón "Retirarse"
+        boton_apostar = pygame.Rect(ANCHO_VENTANA - 360, ALTO_VENTANA - 80, 150, 60)  # Botón "Apostar"
+
         pygame.draw.rect(ventana, (0, 255, 0), boton_retirarse)  # Botón "Retirarse" en color verde
         pygame.draw.rect(ventana, (255, 0, 0), boton_apostar)  # Botón "Apostar" en color rojo
 
